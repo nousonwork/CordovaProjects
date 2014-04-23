@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MyProfile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+
+<meta charset="utf-8">
+<style>
+html,body,#map-canvas {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+</style>
+<link type="text/css" rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+<script
+	src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script>
+	// This example displays an address form, using the autocompletefrom feature
+	// of the Google Places API to help users fill in the information.
+
+	var placeSearch, autocompleteto, autocompletefrom;
+	var componentForm = {
+		street_number : 'short_name',
+		route : 'long_name',
+		locality : 'long_name',
+		administrative_area_level_1 : 'short_name',
+		country : 'long_name',
+		postal_code : 'short_name'
+	};
+
+	function initializefrom() {
+		// Create the autocompletefrom object, restricting the search
+		// to geographical location types.
+		autocompletefrom = new google.maps.places.Autocomplete(
+		/** @type {HTMLInputElement} */
+		(document.getElementById('locationFieldFromText')), {
+			types : [ 'geocode' ]
+		});
+		// When the user selects an address from the dropdown,
+		// populate the address fields in the form.
+		google.maps.event.addListener(autocompletefrom, 'place_changed',
+				function() {
+					fillInAddress();
+				});
+	}
+
+	function initializeto() {
+		// Create the autocompleteto object, restricting the search
+		// to geographical location types.
+		autocompleteto = new google.maps.places.Autocomplete(
+		/** @type {HTMLInputElement} */
+		(document.getElementById('locationFieldToText')), {
+			types : [ 'geocode' ]
+		});
+		// When the user selects an address from the dropdown,
+		// populate the address fields in the form.
+		google.maps.event.addListener(autocompleteto, 'place_changed',
+				function() {
+					fillInAddress();
+				});
+	}
+
+	function enable_from_option() {
+		document.bookForm.locationFieldFrom.hidden = true;
+		document.bookForm.fromOption.hidden = false;
+	}
+
+	function initFunction() {
+		initializeto();
+		initializefrom();
+	}
+
+	// [START region_geolocation]
+	// Bias the autocompletefrom object to the user's geographical location,
+	// as supplied by the browser's 'navigator.geolocation' object.
+	function geolocatefrom() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var geolocation = new google.maps.LatLng(
+						position.coords.latitude, position.coords.longitude);
+				autocompletefrom.setBounds(new google.maps.LatLngBounds(
+						geolocation, geolocation));
+			});
+		}
+	}
+
+	function geolocateto() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var geolocation = new google.maps.LatLng(
+						position.coords.latitude, position.coords.longitude);
+				autocompleteto.setBounds(new google.maps.LatLngBounds(
+						geolocation, geolocation));
+			});
+		}
+	}
+	// [END region_geolocation]
+</script>
+
+<style>
+#locationFieldFrom,#controls1 {
+	position: relative;
+	width: 209px;
+}
+
+#locationFieldTo,#controls2 {
+	position: relative;
+	width: 500px;
+}
+
+#locationFieldFromText {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 99%;
+}
+
+.label {
+	text-align: right;
+	font-weight: bold;
+	width: 10px;
+	color: #303030;
+}
+
+#address {
+	border: 1px solid #000090;
+	background-color: #f0f0ff;
+	width: 40px;
+	padding-right: 2px;
+}
+
+#address td {
+	font-size: 10pt;
+}
+
+.field {
+	width: 99%;
+}
+
+.slimField {
+	width: 80px;
+}
+
+.wideField {
+	width: 20px;
+}
+
+#locationFieldFrom {
+	height: 20px;
+	margin-bottom: 2px;
+}
+
+#locationFieldTo {
+	height: 20px;
+	margin-bottom: 2px;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Le styles -->
+<link href="./css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 20px;
+	padding-bottom: 60px;
+}
+
+/* Custom container */
+.container {
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+.container>hr {
+	margin: 60px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	margin: 80px 0;
+	text-align: center;
+}
+
+.jumbotron h1 {
+	font-size: 100px;
+	line-height: 1;
+}
+
+.jumbotron .lead {
+	font-size: 24px;
+	line-height: 1.25;
+}
+
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+	margin: 60px 0;
+}
+
+.marketing p+h4 {
+	margin-top: 28px;
+}
+
+/* Customize the navbar links to be fill the entire space of the .navbar */
+.navbar .navbar-inner {
+	padding: 0;
+}
+
+.navbar .nav {
+	margin: 0;
+	display: table;
+	width: 100%;
+}
+
+.navbar .nav li {
+	display: table-cell;
+	width: 1%;
+	float: none;
+}
+
+.navbar .nav li a {
+	font-weight: bold;
+	text-align: center;
+	border-left: 1px solid rgba(255, 255, 255, .75);
+	border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+.navbar .nav li:first-child a {
+	border-left: 0;
+	border-radius: 3px 0 0 3px;
+}
+
+.navbar .nav li:last-child a {
+	border-right: 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.addrtoggle {
+	display: inline;
+	margin: 10px;
+	font-weight: bold;
+}
+
+.w100 {
+	width: 100%;
+}
+</style>
+<link href="./css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="./js/html5shiv.js"></script>
+    <![endif]-->
+
+<!-- Fav and touch icons -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="./ico/taxi_car.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="./ico/taxi_car.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="./ico/taxi_car.png">
+<link rel="apple-touch-icon-precomposed" href="./ico/taxi_car.png">
+<link rel="shortcut icon" href="./ico/taxi_car.png">
+
+<link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen">
+
+
+<script type="text/javascript" src="./js/jquery.js"></script>
+
+
+<script type="text/javascript" src="./js/indexHTML.js"></script>
+
+
+</head>
+
+
+
+<body>
+
+
+
+	<div class="container">
+
+		
+			
+			<div class="navbar">
+				<div class="navbar-inner">
+					<div class="container">
+						<ul class="nav">
+							<li ><a href="./bookCab.html">BookTaxi</a></li>
+							<li><a href="./myBookings.html">MyBookings</a></li>
+							<li class="active"><a href="./myProfile.html">MyProfile</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /.navbar -->
+			
+				
+			
+			<div class="heading">
+				<h4 class="form-heading"></h4>
+			</div>
+
+			<input type="hidden" id="callerPage" name="callerPage"
+				value="myProfile.jsp" /> <input type="hidden" id="termsandconds"
+				name="termsandconds" value="on" /> <input type="hidden" id="userId"
+				name="userId" value="" />
+
+
+			<div class="control-group">
+				<label class="control-label" for="inputUser">Mobile Number</label>
+
+				<div class="controls">
+					<input id="inputUser" type="text" readonly="readonly" name="phone"
+						value="">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputUser">Mobile Operator</label>
+
+				<div class="controls">
+
+					<select id="mobileOperator" name="mobileOperator"
+						class="input-medium">
+						<option>Sprint</option>
+						<option>ATnT</option>
+						<option>Verizon</option>
+						<option>TMobile</option>
+						<option>VirginMobile</option>
+						<option>BoostMobile</option>
+					</select>
+
+
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputFirst">First Name</label>
+
+				<div class="controls">
+					<input id="inputFirst" type="text" name="firstName" value="">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputLast">Last Name</label>
+
+				<div class="controls">
+					<input id="inputLast" type="text" name="lastName" value="">
+				</div>
+			</div>
+
+
+
+			<div class="control-group">
+				<label class="control-label" for="selectbasic">Gender</label>
+				<div class="controls">
+					<select id="selectbasic" name="sex" class="input-medium">
+						<option>Male</option>
+						<option>Female</option>
+					</select>
+				</div>
+			</div>
+
+
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Email</label>
+
+				<div class="controls">
+					<input id="inputEmail" type="text" name="mailId" value="">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="textarea">Address</label>
+				<div class="controls">
+					<textarea id="textarea" name="address">	</textarea>
+				</div>
+			</div>
+
+
+
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Password</label>
+
+				<div class="controls">
+					<input id="updatePassword" placeholder="Min. 5 Characters"
+						type="password" name="password">
+				</div>
+			</div>
+
+			<!-- <div class="control-group">
+				<label class="control-label" for="inputPassword">Confirm
+					Password</label>
+
+				<div class="controls">
+					<input id="inputPassword" placeholder="Min. 5 Characters"
+						type="password" name="confirmPassword">
+				</div>
+			</div> -->
+
+
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn btn-success" id="update" type="submit">Update</button>
+				</div>
+			</div>
+
+		
+
+		
+		
+	</div>
+
+
+
+	<!-- /container -->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="./js/jquery.js"></script>
+	<script src="./js/bootstrap-transition.js"></script>
+	<script src="./js/bootstrap-alert.js"></script>
+	<script src="./js/bootstrap-modal.js"></script>
+	<script src="./js/bootstrap-dropdown.js"></script>
+	<script src="./js/bootstrap-scrollspy.js"></script>
+	<script src="./js/bootstrap-tab.js"></script>
+	<script src="./js/bootstrap-tooltip.js"></script>
+	<script src="./js/bootstrap-popover.js"></script>
+	<script src="./js/bootstrap-button.js"></script>
+	<script src="./js/bootstrap-collapse.js"></script>
+	<script src="./js/bootstrap-carousel.js"></script>
+	<script src="./js/bootstrap-typeahead.js"></script>
+	<script src="./js/util.js"></script>
+
+
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap-datetimepicker.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript"
+		src="./js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+		$('.form_datetime').datetimepicker({
+			//language:  'fr',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			forceParse : 0,
+			showMeridian : 1
+		});
+		$('.form_date').datetimepicker({
+			language : 'fr',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			minView : 2,
+			forceParse : 0
+		});
+		$('.form_time').datetimepicker({
+			language : 'fr',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 1,
+			minView : 0,
+			maxView : 1,
+			forceParse : 0
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			initFunction();
+		});
+	</script>
+
+</body>
+</html>
