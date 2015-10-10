@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MyProfile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+
+<meta charset="utf-8">
+<style>
+html,body,#map-canvas {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+</style>
+
+
+
+<style>
+#locationFieldFrom,#controls1 {
+	position: relative;
+	width: 209px;
+}
+
+#locationFieldTo,#controls2 {
+	position: relative;
+	width: 500px;
+}
+
+#locationFieldFromText {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 99%;
+}
+
+.label {
+	text-align: right;
+	font-weight: bold;
+	width: 10px;
+	color: #303030;
+}
+
+#address {
+	border: 1px solid #000090;
+	background-color: #f0f0ff;
+	width: 40px;
+	padding-right: 2px;
+}
+
+#address td {
+	font-size: 10pt;
+}
+
+.field {
+	width: 99%;
+}
+
+.slimField {
+	width: 80px;
+}
+
+.wideField {
+	width: 20px;
+}
+
+#locationFieldFrom {
+	height: 20px;
+	margin-bottom: 2px;
+}
+
+#locationFieldTo {
+	height: 20px;
+	margin-bottom: 2px;
+}
+</style>
+
+
+
+<!-- Le styles -->
+<link href="./css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 20px;
+	padding-bottom: 60px;
+}
+
+/* Custom container */
+.container {
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+.container>hr {
+	margin: 60px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	margin: 80px 0;
+	text-align: center;
+}
+
+.jumbotron h1 {
+	font-size: 100px;
+	line-height: 1;
+}
+
+.jumbotron .lead {
+	font-size: 24px;
+	line-height: 1.25;
+}
+
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+	margin: 60px 0;
+}
+
+.marketing p+h4 {
+	margin-top: 28px;
+}
+
+/* Customize the navbar links to be fill the entire space of the .navbar */
+.navbar .navbar-inner {
+	padding: 0;
+}
+
+.navbar .nav {
+	margin: 0;
+	display: table;
+	width: 100%;
+}
+
+.navbar .nav li {
+	display: table-cell;
+	width: 1%;
+	float: none;
+}
+
+.navbar .nav li a {
+	font-weight: bold;
+	text-align: center;
+	border-left: 1px solid rgba(255, 255, 255, .75);
+	border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+.navbar .nav li:first-child a {
+	border-left: 0;
+	border-radius: 3px 0 0 3px;
+}
+
+.navbar .nav li:last-child a {
+	border-right: 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.addrtoggle {
+	display: inline;
+	margin: 10px;
+	font-weight: bold;
+}
+
+.w100 {
+	width: 100%;
+}
+</style>
+<link href="./css/bootstrap-responsive.css" rel="stylesheet">
+
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/jstorage.js"></script>
+<script type="text/javascript" src="./js/indexHTML.js"></script>
+
+<script>
+$(document).ready(function(){
+	//alert($.jStorage.get("name"));
+	document.getElementById("name").value = $.jStorage.get("name");
+	document.getElementById("phone").value = $.jStorage.get("phone");
+	document.getElementById("mobileOperator").value = $.jStorage.get("mobileOperator");
+	//document.getElementById("firstName").value = $.jStorage.get("name");
+	document.getElementById("lastName").value = $.jStorage.get("lastName");
+	document.getElementById("sex").value = $.jStorage.get("sex");
+	document.getElementById("mailId").value = $.jStorage.get("mailId");
+	document.getElementById("address").value = $.jStorage.get("address");
+	
+});
+					
+			
+</script>
+
+
+</head>
+
+
+
+<body>
+	<div class="container">
+<div class="masthead">
+			<h3 class="muted">
+				<img class="w100 img-responsive text-center"
+					src="./ico/taxi_car.png">
+			</h3>
+			
+</div>
+
+
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+					<ul class="nav">
+						<li><a href="./bookCab.html">Book</a></li>
+						<li><a href="./myBookings.html">List</a></li>
+						<li class="active"><a href="./myProfile.html">Profile</a></li>
+						<li><a href="./index.html">LogOut</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /.navbar -->
+
+<div class="span8">
+
+		<div class="heading">
+			<h4 class="form-heading"></h4>
+		</div>
+
+		<input type="hidden" id="callerPage" name="callerPage"
+			value="myProfile.jsp" /> <input type="hidden" id="termsandconds"
+			name="termsandconds" value="on" /> <input type="hidden" id="userId"
+			name="userIdName" value="" />
+
+
+		<div class="control-group">
+			<label class="control-label" for="inputUser">Mobile Number</label>
+
+			<div class="controls">
+				<input id="phone" type="text" readonly="readonly" name="phoneName"
+					value="">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="inputUser">Mobile Operator</label>
+
+			<div class="controls">
+
+				<select id="mobileOperator" name="mobileOperatorName"
+					class="input-medium">
+					<option>Sprint</option>
+					<option>ATnT</option>
+					<option>Verizon</option>
+					<option>TMobile</option>
+					<option>VirginMobile</option>
+					<option>BoostMobile</option>
+				</select>
+
+
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="inputFirst">First Name</label>
+
+			<div class="controls">
+				<input id="name" type="text" name="nameName" value="">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="inputLast">Last Name</label>
+
+			<div class="controls">
+				<input id="lastName" type="text" name="lastNameName" value="">
+			</div>
+		</div>
+
+
+
+		<div class="control-group">
+			<label class="control-label" for="selectbasic">Gender</label>
+			<div class="controls">
+				<select id="sex" name="sexName" class="input-medium">
+					<option>Male</option>
+					<option>Female</option>
+				</select>
+			</div>
+		</div>
+
+
+		<div class="control-group">
+			<label class="control-label" for="inputEmail">Email</label>
+
+			<div class="controls">
+				<input id="mailId" type="text" name="mailIdName" value="">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="textarea">Address</label>
+			<div class="controls">
+				<textarea id="address" name="addressName">	</textarea>
+			</div>
+		</div>
+
+
+
+		<div class="control-group">
+			<label class="control-label" for="inputPassword">Password</label>
+
+			<div class="controls">
+				<input id="updatePassword" placeholder="Min. 5 Characters"
+					type="password" name="password">
+			</div>
+		</div>
+
+		
+
+
+		<div class="control-group">
+			<div class="controls">
+				<button class="btn btn-success" id="update" type="submit">Update</button>
+			</div>
+		</div>
+
+
+</div>
+
+<div class="masthead">
+			<h3 class="muted">
+				<img class="w100 img-responsive text-center"
+					src="./ico/footer.jpg">
+			</h3>
+			
+</div>
+
+
+</div>
+
+
+
+	<!-- /container -->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!--
+	<script src="./js/bootstrap-transition.js"></script>
+	<script src="./js/bootstrap-alert.js"></script>
+	<script src="./js/bootstrap-modal.js"></script>
+	<script src="./js/bootstrap-dropdown.js"></script>
+	<script src="./js/bootstrap-scrollspy.js"></script>
+	<script src="./js/bootstrap-tab.js"></script>
+	<script src="./js/bootstrap-tooltip.js"></script>
+	<script src="./js/bootstrap-popover.js"></script>
+	<script src="./js/bootstrap-button.js"></script>
+	<script src="./js/bootstrap-collapse.js"></script>
+	<script src="./js/bootstrap-carousel.js"></script>
+	<script src="./js/bootstrap-typeahead.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			initFunction();
+		});
+	</script> -->
+
+</body>
+</html>
